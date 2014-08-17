@@ -11,4 +11,10 @@ public class ContactRepository
     {
         db.executeUpdate("DELETE FROM contact WHERE id=" + id);
     }
+    
+    public void update(Contact contact)
+    {
+        
+    }
+    
 }
