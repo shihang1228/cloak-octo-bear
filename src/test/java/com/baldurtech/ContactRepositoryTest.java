@@ -24,6 +24,7 @@ public class ContactRepositoryTest extends TestCase
         contact.setEmail("1335932576@qq.com");
         contactRepository.update(contact);
         
-        assertEquals("UPDATE contact SET mobile=18235408753, name=Tom,email=1335932576@qq.com WHERE id=1", db.executeUpdateParam);
+        assertArrayEquals(new Object[]{"Tom","1335932576@qq.com","18235408753",1L},db.executeUpdateParam2);
+        assertEquals("UPDATE contact SET mobile=?, name=?,email=? WHERE id=?", db.executeUpdateParam);
     }
 }
