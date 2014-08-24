@@ -6,15 +6,39 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.ServletException;
 import java.io.IOException;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.Constructor;
+
 public class DispatchServlet extends HttpServlet
 {
-    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException,ServletException
+    public void service(HttpServletRequest req, HttpServletResponse resp) throws IOException,ServletException
     {
-        
+        try
+        {
+            String uri = req.getRequestURI();
+            ActionContext actionContext = new ActionContextImpl(getServletContext(), req, resp);
+            Class actionClass = getActionByUri(uri);
+            @SuppressWarnings("unchecked")
+            Constructor actionConstructor = actionClass.getDeclaredConstructor(ActionContext.class);
+            Action actionInstance = (Action)actionConstructor.newInstance(actionContext);
+            @SuppressWarnings("unchecked")
+            Method method = actionClass.getDeclaredMethod(getMethodNameByUri(uri));
+            method.invoke(actionInstance);
+        }
+        catch(Exception ex)
+        {
+            
+        }
     }
     
     public String defaultPackageName = "com.baldurtech";
     public String defaultSuffix = ".jsp";
+    
+    public Class getActionByUri(String uri) throws Exception
+    {
+        return Class.forName(getActionClassNameByUri(uri));
+    }
+    
     public String getActionClassNameByUri(String uri)
     {
         String[] uriParts = splitBySlash(uri);
