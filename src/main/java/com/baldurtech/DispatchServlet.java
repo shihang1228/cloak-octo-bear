@@ -14,6 +14,7 @@ public class DispatchServlet extends HttpServlet
     }
     
     public String defaultPackageName = "com.baldurtech";
+    public String methodSuffix = ".jsp";
     public String getActionClassNameByUri(String uri)
     {
         String[] uriParts = splitBySlash(uri);
@@ -40,6 +41,6 @@ public class DispatchServlet extends HttpServlet
         {
             return "index";
         }
-        return uriParts[indexOfActionClassName];
+        return uriParts[indexOfActionClassName].replace(methodSuffix,"");
     }
 }
