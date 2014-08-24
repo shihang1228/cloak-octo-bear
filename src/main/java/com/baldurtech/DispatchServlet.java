@@ -31,6 +31,10 @@ public class DispatchServlet extends HttpServlet
     {
         String[] uriParts = uri.split("/");
         Integer indexOfActionClassName = 2;
+        if(uriParts.length <= indexOfActionClassName)
+        {
+            return "index";
+        }
         return uriParts[indexOfActionClassName];
     }
 }
