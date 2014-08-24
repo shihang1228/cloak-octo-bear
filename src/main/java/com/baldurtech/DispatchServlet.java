@@ -48,4 +48,9 @@ public class DispatchServlet extends HttpServlet
     {
         return str.replace(defaultSuffix,"");
     }
+    
+    public String getViewPage(String uri)
+    {
+        return "/WEB-INF/jsp" + uri;
+    }
 }
