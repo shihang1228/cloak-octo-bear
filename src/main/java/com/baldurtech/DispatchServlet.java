@@ -14,12 +14,12 @@ public class DispatchServlet extends HttpServlet
     }
     
     public String defaultPackageName = "com.baldurtech";
-    public String methodSuffix = ".jsp";
+    public String defaultSuffix = ".jsp";
     public String getActionClassNameByUri(String uri)
     {
         String[] uriParts = splitBySlash(uri);
         Integer indexOfActionClassName = 1;
-        String actionClassName = removeMethodSuffix(capitalize(uriParts[indexOfActionClassName]));
+        String actionClassName = removeDefaultSuffix(capitalize(uriParts[indexOfActionClassName]));
         return defaultPackageName + "." + actionClassName + "Action";        
     }
     
@@ -41,11 +41,11 @@ public class DispatchServlet extends HttpServlet
         {
             return "index";
         }
-        return removeMethodSuffix(uriParts[indexOfActionClassName]);
+        return removeDefaultSuffix(uriParts[indexOfActionClassName]);
     }
     
-    public String removeMethodSuffix(String str)
+    public String removeDefaultSuffix(String str)
     {
-        return str.replace(methodSuffix,"");
+        return str.replace(defaultSuffix,"");
     }
 }
