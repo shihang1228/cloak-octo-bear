@@ -8,4 +8,10 @@ public class DispatchServletTest extends TestCase
         DispatchServlet dispatchServlet = new DispatchServlet();
         assertEquals("com.baldurtech.ContactAction", dispatchServlet.getActionClassNameByUri("/contact/show"));
     }
+    
+    public void test_uri_contact_应该由ContactAction来处理()
+    {
+        DispatchServlet dispatchServlet = new DispatchServlet();
+        assertEquals("com.baldurtech.ContactAction",dispatchServlet.getActionClassNameByUri("/contact"));
+    }
 }
