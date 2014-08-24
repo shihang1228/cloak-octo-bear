@@ -41,6 +41,11 @@ public class DispatchServlet extends HttpServlet
         {
             return "index";
         }
-        return uriParts[indexOfActionClassName].replace(methodSuffix,"");
+        return removeMethodSuffix(uriParts[indexOfActionClassName]);
+    }
+    
+    public String removeMethodSuffix(String str)
+    {
+        return str.replace(methodSuffix,"");
     }
 }
