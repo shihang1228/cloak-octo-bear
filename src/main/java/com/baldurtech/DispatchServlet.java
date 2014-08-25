@@ -53,7 +53,7 @@ public class DispatchServlet extends HttpServlet
     }
     
     public String defaultPackageName = "com.baldurtech";
-    public String defaultSuffix = ".jsp";
+    public String defaultSuffix = ".do";
     
     public String getUri(HttpServletRequest req)
     {
@@ -100,6 +100,6 @@ public class DispatchServlet extends HttpServlet
     
     public String getViewPage(String uri)
     {
-        return "/WEB-INF/jsp" + uri;
+        return "/WEB-INF/jsp" + removeDefaultSuffix(uri) + ".jsp";
     }
 }
