@@ -9,13 +9,11 @@ import java.io.IOException;
 
 public class ActionContextImpl implements ActionContext
 {
-    final ServletContext servletContext;
     final HttpServletRequest req;
     final HttpServletResponse resp;
     
-    public ActionContextImpl(ServletContext servletContext, HttpServletRequest req, HttpServletResponse resp)
+    public ActionContextImpl(HttpServletRequest req, HttpServletResponse resp)
     {
-        this.servletContext = servletContext;
         this.req = req;
         this.resp = resp;
     }

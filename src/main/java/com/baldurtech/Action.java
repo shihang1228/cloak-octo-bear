@@ -1,6 +1,5 @@
 package com.baldurtech;
 
-import javax.servlet.ServletContext;
 import java.io.PrintWriter;
 import java.io.IOException;
 

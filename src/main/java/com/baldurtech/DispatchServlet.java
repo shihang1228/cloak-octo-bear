@@ -18,7 +18,7 @@ public class DispatchServlet extends HttpServlet
         try
         {
             String uri = getUri(req);
-            ActionContext actionContext = new ActionContextImpl(getServletContext(), req, resp);
+            ActionContext actionContext = new ActionContextImpl(req, resp);
             Class actionClass = getActionByUri(uri);
             @SuppressWarnings("unchecked")
             Constructor actionConstructor = actionClass.getDeclaredConstructor(ActionContext.class);
