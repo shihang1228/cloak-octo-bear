@@ -6,24 +6,15 @@ import javax.servlet.http.HttpServletResponse;
 
 public abstract class Action
 {
-    final ServletContext servletContext;
-    final HttpServletRequest req;
-    final HttpServletResponse resp;
+    final ActionContext actionContext;
     
-    public Action()
+    public Action(ActionContext actionContext)
     {
-        this(null, null, null);
+        this.actionContext = actionContext;
     }
     
-    public Action(ServletContext servletContext, HttpServletRequest req,HttpServletResponse resp)
+    public void setAttribute(String key, Object value)
     {
-        this.servletContext = servletContext;
-        this.req = req;
-        this.resp = resp;
-    }
-    
-    public String getViewPage(String uri)
-    {
-        return "/WEB-INF/jsp" + uri;
+        actionContext.setAttribute(key, value);
     }
 }

@@ -17,4 +17,9 @@ public class ActionContextImpl implements ActionContext
         this.resp = resp;
     }
     
+    public void setAttribute(String key, Object value)
+    {
+        req.setAttribute(key, value);
+    }
+    
 }

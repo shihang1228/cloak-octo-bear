@@ -9,13 +9,15 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Constructor;
 
+import java.util.Map;
+
 public class DispatchServlet extends HttpServlet
 {
     public void service(HttpServletRequest req, HttpServletResponse resp) throws IOException,ServletException
     {
         try
         {
-            String uri = req.getRequestURI();
+            String uri = getUri(req);
             ActionContext actionContext = new ActionContextImpl(getServletContext(), req, resp);
             Class actionClass = getActionByUri(uri);
             @SuppressWarnings("unchecked")
@@ -23,7 +25,26 @@ public class DispatchServlet extends HttpServlet
             Action actionInstance = (Action)actionConstructor.newInstance(actionContext);
             @SuppressWarnings("unchecked")
             Method method = actionClass.getDeclaredMethod(getMethodNameByUri(uri));
-            method.invoke(actionInstance);
+            Object returnValue = method.invoke(actionInstance);
+            
+            if(null == returnValue)
+            {
+                return;
+            }
+            if(returnValue instanceof Map)
+            {
+                @SuppressWarnings("unchecked")
+                Map<String, Object> dataModel = (Map<String, Object>)returnValue;
+                for(String key: dataModel.keySet())
+                {
+                    req.setAttribute(key, dataModel.get(key));
+                }
+            }
+            else
+            {
+                 req.setAttribute("data", returnValue);
+            }
+            getServletContext().getRequestDispatcher(getViewPage(uri)).forward(req, resp);
         }
         catch(Exception ex)
         {
@@ -34,6 +55,10 @@ public class DispatchServlet extends HttpServlet
     public String defaultPackageName = "com.baldurtech";
     public String defaultSuffix = ".jsp";
     
+    public String getUri(HttpServletRequest req)
+    {
+        return req.getRequestURI();
+    }
     public Class getActionByUri(String uri) throws Exception
     {
         return Class.forName(getActionClassNameByUri(uri));
