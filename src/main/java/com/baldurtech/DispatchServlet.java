@@ -46,9 +46,13 @@ public class DispatchServlet extends HttpServlet
             }
             getServletContext().getRequestDispatcher(getViewPage(uri)).forward(req, resp);
         }
+        catch(NoSuchMethodException ex)
+        {
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+        }
         catch(Exception ex)
         {
-            
+            ex.printStackTrace();
         }
     }
     
