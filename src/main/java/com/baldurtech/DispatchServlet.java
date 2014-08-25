@@ -57,7 +57,7 @@ public class DispatchServlet extends HttpServlet
     
     public String getUri(HttpServletRequest req)
     {
-        return req.getRequestURI();
+        return req.getRequestURI().replace(req.getContextPath(), "");
     }
     public Class getActionByUri(String uri) throws Exception
     {

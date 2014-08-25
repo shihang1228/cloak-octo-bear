@@ -1,8 +1,8 @@
 package com.baldurtech;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
+import java.io.IOException;
 
 public abstract class Action
 {
@@ -16,5 +16,17 @@ public abstract class Action
     public void setAttribute(String key, Object value)
     {
         actionContext.setAttribute(key, value);
+    }
+    
+    public void println(String str)
+    {
+        try
+        {
+            actionContext.getOut().println(str);
+        }
+        catch(IOException ex)
+        {
+            ex.printStackTrace();
+        }
     }
 }
