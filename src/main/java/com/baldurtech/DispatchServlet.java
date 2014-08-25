@@ -27,24 +27,12 @@ public class DispatchServlet extends HttpServlet
             Method method = actionClass.getDeclaredMethod(getMethodNameByUri(uri));
             Object returnValue = method.invoke(actionInstance);
             
-            if(null == returnValue)
+            if(returnValue != null)
             {
-                return;
+                TemplateEngine template = new JspTemplateEngine(getServletContext(), req, resp);
+                template.merge(getViewPage(uri), returnValue);
             }
-            if(returnValue instanceof Map)
-            {
-                @SuppressWarnings("unchecked")
-                Map<String, Object> dataModel = (Map<String, Object>)returnValue;
-                for(String key: dataModel.keySet())
-                {
-                    req.setAttribute(key, dataModel.get(key));
-                }
-            }
-            else
-            {
-                 req.setAttribute("data", returnValue);
-            }
-            getServletContext().getRequestDispatcher(getViewPage(uri)).forward(req, resp);
+            
         }
         catch(NoSuchMethodException ex)
         {
@@ -63,6 +51,7 @@ public class DispatchServlet extends HttpServlet
     {
         return req.getRequestURI().replace(req.getContextPath(), "");
     }
+    
     public Class getActionByUri(String uri) throws Exception
     {
         return Class.forName(getActionClassNameByUri(uri));
