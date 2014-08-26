@@ -28,4 +28,21 @@ public class ActionContextImpl implements ActionContext
         return resp.getWriter();
     }
     
+    public String getParameter(String name)
+    {
+        return req.getParameter(name);
+    }
+    
+    public void redirectAction(String actionUri)
+    {
+        try
+        {
+            resp.sendRedirect(actionUri + ".do");
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+    
 }
