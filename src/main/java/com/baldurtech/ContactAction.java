@@ -17,6 +17,7 @@ public class ContactAction extends Action
     
     public Map<String, Object> show()
     {
+        actionContext.redirectAction("contact/list");
         return new HashMap<String, Object>();
     }
     
