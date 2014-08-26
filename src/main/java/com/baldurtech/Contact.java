@@ -1,6 +1,6 @@
 package com.baldurtech;
 
-public class Contact
+public class Contact extends AbstractDomain
 {
     private Long id;
     private String name;
